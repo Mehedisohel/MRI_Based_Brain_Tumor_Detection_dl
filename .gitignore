@@ -1,0 +1,5 @@
+models/model.h5
+uploads/
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Detection</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<!--  NAVBAR  -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#">
+
+            <i class="fa-solid fa-brain"></i>
+
+            Brain Tumor Detection
+
+        </a>
+
+        <button class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="navbarNav">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active" href="#">
+                        Home
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#about">
+                        About
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#upload">
+                        Detection
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#contact">
+                        Contact
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!--  HERO SECTION -->
+<section class="hero">
+
+    <div class="container-fluid">
+
+        <div class="row g-0 align-items-center">
+
+            <!-- Left Content -->
+            <div class="col-lg-5 hero-content">
+
+                <h1 class="display-4 fw-bold">
+                    MRI Powered Brain Tumor Detection
+                </h1>
+
+                <p class="lead mt-4">
+                    Upload an MRI image and our Deep Learning model
+                    will predict whether a brain tumor is present and
+                    identify its type with confidence.
+                </p>
+
+                <div class="row mt-4">
+
+                    <div class="col-md-4">
+                        <div class="feature-box">
+                            <i class="fa-solid fa-brain text-primary fa-2x"></i>
+                            <h6 class="mt-2">Deep Learning</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="feature-box">
+                            <i class="fa-solid fa-shield-halved text-success fa-2x"></i>
+                            <h6 class="mt-2">High Accuracy</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="feature-box">
+                            <i class="fa-solid fa-clock text-warning fa-2x"></i>
+                            <h6 class="mt-2">Fast Result</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a href="#upload" class="btn btn-primary btn-lg mt-4">
+                    Start Detection
+                </a>
+
+            </div>
+
+            <!-- Right Image -->
+            <div class="col-lg-7 p-0 position-relative">
+
+                <div class="hero-overlay"></div>
+
+                <img src="{{ url_for('static', filename='assets/img3.jpeg') }}"
+                     alt="Brain Tumor Detection"
+                     class="hero-image">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- Upload Section Starts Below -->
+<section id="upload" class="py-5">
+
+<div class="container">
+
+<div class="row">
+  <!-- Upload Card -->
+<div class="col-lg-5 mb-4">
+
+    <div class="card shadow border-0 p-4">
+
+        <h3 class="text-primary mb-4">
+            <i class="fa-solid fa-upload"></i>
+            Upload MRI Image
+        </h3>
+
+        <form action="/"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div class="upload-box">
+
+                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+
+                <h5 class="mt-3">
+                    Drag & Drop
+                </h5>
+
+                <p class="text-muted">
+                    or choose an MRI image
+                </p>
+
+                <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    class="form-control"
+                    accept=".jpg,.jpeg,.png"
+                    required>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100 mt-4">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Predict
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Prediction Card -->
+
+<div class="col-lg-7">
+
+<div class="card shadow border-0 p-4">
+
+<h3 class="text-success mb-4">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Prediction Result
+
+</h3>
+
+{% if file_path %}
+
+<div class="text-center">
+
+<img src="{{ file_path }}"
+
+class="img-fluid rounded preview-image">
+
+</div>
+
+{% endif %}
+
+{% if result %}
+
+<hr>
+
+<h4 class="mt-3">
+
+Prediction
+
+</h4>
+
+<div class="alert alert-success">
+
+<h3>
+
+{{ result }}
+
+</h3>
+
+</div>
+
+<h5>
+
+Confidence
+
+</h5>
+
+<div class="progress mb-3">
+
+
+    <div class="progress-bar progress-bar-striped progress-bar-animated"
+         role="progressbar"
+         style="width: {{ confidence if confidence else '0%' }};"
+         aria-valuenow="0"
+         aria-valuemin="0"
+         aria-valuemax="100">
+        {{ confidence if confidence else '0%' }}
+    </div>
+
+
+</div>
+
+{% else %}
+
+<div class="text-center py-5">
+
+<i class="fa-solid fa-image fa-5x text-secondary"></i>
+
+<h4 class="mt-4">
+
+No Prediction Yet
+
+</h4>
+
+<p>
+
+Upload an MRI image to detect brain tumor.
+
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Features Section -->
+
+<section class="py-5 bg-light">
+
+<div class="container">
+
+<div class="row text-center">
+
+<div class="col-md-4">
+
+<div class="card border-0 shadow-sm p-4">
+
+<i class="fa-solid fa-brain fa-3x text-primary mb-3"></i>
+
+<h4>
+
+Deep Learning
+
+</h4>
+
+<p>
+
+CNN model trained for brain tumor classification.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card border-0 shadow-sm p-4">
+
+<i class="fa-solid fa-bolt fa-3x text-warning mb-3"></i>
+
+<h4>
+
+Fast Detection
+
+</h4>
+
+<p>
+
+Prediction generated in a few seconds.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card border-0 shadow-sm p-4">
+
+<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
+
+<h4>
+
+Reliable
+
+</h4>
+
+<p>
+
+Helps assist medical image analysis.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about" class="py-5">
+
+<div class="container">
+
+<div class="row align-items-center">
+
+<div class="col-lg-6">
+
+<img src="{{ url_for('static', filename='assets/img2.jpeg') }}"
+class="img-fluid rounded">
+
+</div>
+
+<div class="col-lg-6">
+
+<h2 class="fw-bold mb-4">
+
+About This Project
+
+</h2>
+
+<p>
+
+This Brain Tumor Detection System uses a Deep Learning
+Convolutional Neural Network (CNN) to classify MRI images
+into four categories.
+
+</p>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">
+✔ Pituitary Tumor
+</li>
+
+<li class="list-group-item">
+✔ Glioma Tumor
+</li>
+
+<li class="list-group-item">
+✔ Meningioma Tumor
+</li>
+
+<li class="list-group-item">
+✔ No Tumor
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CONTACT  -->
+
+<section id="contact" class="py-5 bg-light">
+
+<div class="container text-center">
+
+<h2 class="fw-bold">
+
+Contact
+
+</h2>
+
+<p class="mt-3">
+
+Brain Tumor Detection using Deep Learning
+
+</p>
+
+<p>
+
+Developed using
+
+<strong>Python</strong> •
+
+<strong>Flask</strong> •
+
+<strong>TensorFlow</strong> •
+
+<strong>Keras</strong> •
+
+<strong>Bootstrap 5</strong>
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<!-- Footer -->
+<footer class="footer text-bg-dark">
+
+    <div class="container">
+
+        <div class="row align-items-start">
+
+            <!-- Logo -->
+            <div class="col-lg-3 col-md-6 footer-col">
+
+                <h3>
+                    <i class="fa-solid fa-brain"></i>
+                    Brain Tumor Detection
+                </h3>
+
+                <p>AI Powered MRI Classification</p>
+
+                <p class="copyright">
+                    © 2026 All Rights Reserved.
+                </p>
+                <p> Site owner Mohammad Mehedi Sohel</p>
+
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6 footer-col">
+
+                <h5>Quick Links</h5>
+
+                <ul class="footer-links">
+
+                    <li><a href="#">Home</a></li>
+
+                    <li><a href="#about">About</a></li>
+
+                    <li><a href="#upload">How It Works</a></li>
+
+                    <li><a href="#">Results</a></li>
+
+                    <li><a href="#contact">Contact</a></li>
+
+                </ul>
+
+            </div>
+
+            <!-- Technologies -->
+            <div class="col-lg-4 col-md-6 footer-col">
+
+                <h5>Technologies Used</h5>
+
+                <div class="tech-icons">
+
+                    <span><i class="fa-brands fa-python"></i> Python</span>
+
+                    <span><i class="fa-solid fa-brain"></i> TensorFlow</span>
+
+                    <span><i class="fa-solid fa-k"></i> Keras</span>
+
+                    <span><i class="fa-solid fa-microchip"></i> VGG16</span>
+
+                    <span><i class="fa-solid fa-flask"></i> Flask</span>
+
+                </div>
+
+            </div>
+
+            <!-- Social -->
+            <div class="col-lg-3 col-md-6 footer-col">
+
+                <h5>Connect</h5>
+
+                <div class="social-icons">
+
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                    <a href="#"><i class="fab fa-github"></i></a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!--  LOADING MODAL  -->
+
+<div class="modal fade"
+id="loadingModal"
+data-bs-backdrop="static"
+data-bs-keyboard="false">
+
+<div class="modal-dialog modal-dialog-centered">
+
+<div class="modal-content">
+
+<div class="modal-body text-center p-5">
+
+<div class="spinner-border text-primary"
+style="width:4rem;height:4rem;">
+
+</div>
+
+<h4 class="mt-4">
+
+Predicting...
+
+</h4>
+
+<p>
+
+Please wait while the AI model analyzes the MRI image.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+
+<script src="{{ url_for('static', filename='js/Scripts.js') }}"></script>
+
+</body>
+
+</html>
