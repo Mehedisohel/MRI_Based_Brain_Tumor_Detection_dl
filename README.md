@@ -50,35 +50,30 @@ The model classifies MRI images into four categories:
 # 📁 Project Structure
 
 ```text
-Brain-Tumor-Detection/
+MRI_Based_Brain_Tumor_Detection_dl/
 │
-├── .python-version
-├── runtime.txt
-├── Procfile
-├── .gitignore
-├── requirements.txt
-├── main.py
-│
-├── models/
-│   └── model.h5
+├── static/
+│   ├── assets/
+│   │   ├── WhatsApp Image.jpeg
+│   │   ├── img1.jpeg
+│   │   ├── img2.jpeg
+│   │   ├── img3.jpeg
+│   │   └── img3.png
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── Scripts.js
 │
 ├── templates/
 │   └── index.html
 │
-├── static/
-│   ├── css/
-│   │   └── style.css
-│   ├── js/
-│   │   └── Scripts.js
-│   └── assets/
-│       ├── img1.jpeg
-│       ├── img2.jpeg
-│       ├── img3.jpeg
-│       └── ...
-│
-├── uploads/
-│
-└── README.md
+├── .gitattributes
+├── .gitignore
+├── .python-version
+├── Profile
+├── README.md
+├── main.py
+└── requirements.txt
 ```
 
 ---
@@ -88,13 +83,13 @@ Brain-Tumor-Detection/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Brain-Tumor-Detection.git
+git clone [https://github.com/Mehedisohel/MRI_Based_Brain_Tumor_Detection_dl.git]
 ```
 
 ## 2. Navigate to the Project
 
 ```bash
-cd Brain-Tumor-Detection
+cd MRI_Based_Brain_Tumor_Detection_dl
 ```
 
 ## 3. Install Dependencies
@@ -112,7 +107,7 @@ python main.py
 Open your browser and visit:
 
 ```text
-http://127.0.0.1:5000
+[http://127.0.0.1:5000]
 ```
 
 ---
@@ -162,9 +157,7 @@ The model was trained on a comprehensive dataset of MRI brain scans.
 
 | Home Page | Prediction Result |
 |-----------|-------------------|
-| ![Home](screenshots/home.png) | ![Prediction](screenshots/result.png) |
-
-> **Note:** Replace the images above with your own screenshots in the `screenshots/` directory.
+| ![Home](static/assets/WhatsApp%20Image%202026-07-08%20at%2012.29.26%20AM.jpeg) | <img width="1920" height="900" alt="image" src="https://github.com/user-attachments/assets/91b595ec-b2b5-479e-a961-01a992df7c43" />
 
 ---
 
@@ -191,8 +184,8 @@ This project can be deployed on:
 
 # 👨‍💻 Author
 
-**Mohammad Mehedi Sohel**
-**Intesar Hossain**
+- **Mohammad Mehedi Sohel**
+- **Intesar Hossain**
 
 B.Sc. in Computer Science & Engineering
 
